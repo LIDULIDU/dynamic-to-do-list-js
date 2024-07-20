@@ -17,30 +17,30 @@ document.addEventListener('DOMContentLoaded', function () {
             button.classList.add('remove-btn');
             button.onclick = function () {
                 taskList.removeChild(listItem);
-                saveTasks(); // Save tasks after removal
+                addTasks(); // Save tasks after removal
             };
 
             listItem.appendChild(button);
             taskList.appendChild(listItem);
 
             taskInput.value = '';
-            saveTasks(); // Save tasks after addition
+            addTasks(); // Save tasks after addition
         }
     }
 
     // Function to save tasks to Local Storage
-    function saveTasks() {
-        const tasks = [];
+    function addTasks() {
+        const storedTasks = [];
         taskList.querySelectorAll('li').forEach(item => {
-            tasks.push(item.textContent.replace('Remove', '').trim());
+            storedTasks.push(item.textContent.replace('Remove', '').trim());
         });
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+        localStorage.setItem('storedTasks', JSON.stringify(storedTasks));
     }
 
-    // Function to load tasks from Local Storage
+    // Function to load storedTasks from Local Storage
     function loadTasks() {
-        const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-        tasks.forEach(task => {
+        const storedTasks = JSON.parse(localStorage.getItem('storedTasks')) || [];
+        storedTasks.forEach(task => {
             const listItem = document.createElement('li');
             listItem.textContent = task;
 
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
             button.classList.add('remove-btn');
             button.onclick = function () {
                 taskList.removeChild(listItem);
-                saveTasks(); // Save tasks after removal
+                addTasks(); // Save storedTasks after removal
             };
 
             listItem.appendChild(button);
@@ -67,6 +67,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Load tasks from Local Storage when the page loads
+    // Load storedTasks from Local Storage when the page loads
     loadTasks();
 });
